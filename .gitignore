@@ -1,0 +1,62 @@
+# Scala specific
+*.class
+*.log
+target/
+.bsp/
+
+# SBT specific
+.cache
+.history
+.lib/
+dist/*
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+project/target/
+project/project/
+
+# IDE specific (IntelliJ)
+.idea/
+.idea_modules/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Build and dependency directories
+bin/
+build/
+out/
+.gradle/
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Environment variables and secrets
+.env
+.env.local
+*.env.*
+!.env.example
+
+# Other common files to ignore
+*.swp
+*~
+.metals/
+.bloop/
