@@ -65,56 +65,22 @@ object SparkApp {
       "2023-02-01"          // start_date
     )
     
-    // Convert new row to DataFrame using the schema
+    // Create a DataFrame with the new row
     val newRowDF = spark.createDataFrame(
       spark.sparkContext.parallelize(Seq(newRow)),
       schema
     )
     
-    persistToJson(spark, filteredDF, newRowDF)
+    // Write the new row directly to the JSON file in append mode
+    newRowDF
+      .write
+      .mode("append")
+      .option("multiline", true)
+      .json("src/main/resources/dummy.json")
+
+    println("New row has been appended to the JSON file")
 
     spark.stop()
-  }
-
-  def persistToJson(spark: SparkSession, existingDF: DataFrame, newRowDF: DataFrame): Unit = {
-    // First, read the existing JSON file to get current data
-    val currentDF = spark.read
-      .option("multiline", "true")
-      .schema(schema)
-      .json("src/main/resources/dummy.json")
-    
-    // Union all DataFrames: current data and new row, then remove duplicates
-    val updatedDF = currentDF.union(newRowDF).distinct()
-    
-    // Create a temporary directory for the new JSON
-    val tempDir = "temp_json_output"
-    
-    // Write to temporary location
-    updatedDF.coalesce(1)
-      .write
-      .mode("overwrite")
-      .option("multiline", true)
-      .json(tempDir)
-      
-    // Move the generated JSON file to the target location
-    import org.apache.hadoop.fs.{FileSystem, Path}
-    val fs = FileSystem.get(spark.sparkContext.hadoopConfiguration)
-    
-    // Find the generated JSON file in temp directory
-    val tempJsonFile = fs.globStatus(new Path(s"$tempDir/part-*.json"))(0).getPath()
-    val targetPath = new Path("src/main/resources/dummy.json")
-    
-    // Delete the existing file if it exists
-    val file = new java.io.File(targetPath.toString)
-    if (file.exists()) {
-      file.delete()
-    }
-    
-    // Copy the file and delete temp directory
-    fs.rename(tempJsonFile, targetPath) // Move new file
-    fs.delete(new Path(tempDir), true) // Clean up temp directory
-      
-    println("New row has been appended to the JSON file")
   }
 
   // Helper method to create a phase row
