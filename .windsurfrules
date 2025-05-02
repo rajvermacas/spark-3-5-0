@@ -31,7 +31,7 @@
 - Type :quit to exit the spark-shell
 
 # Generate test results
-- Whenever I ask you to create the TEST RESULTS remember to write a script that will have the discussed test cases
+- Whenever I ask you to create the TEST RESULTS remember to write a new script that will have the discussed test cases
 - Run the test cases and generate the test results and save them to a markdown file in src/test folder.
-- In the newly created markdown file mention very clearly what was the test that was performed and what were the observations.
+- In the newly created markdown file mention very clearly what was the test that was performed and what were the observations along with the program output.
 - Also mention the code snippet that was used to perform the test and mention the test cases filename also which was used.
