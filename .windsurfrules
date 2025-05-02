@@ -30,47 +30,39 @@
 ## Exit Command
 - Type :quit to exit the spark-shell
 
-# Generate test results
+# Evaluate Execution Output
+**When I ask you to "Evaluate Execution Output", given a target and evaluation instructions, follow these steps:**
 
-**When I say “Generate test results,” follow these steps:**
+1.  **Create Evaluation Script:**
+    *   Write a script based on my instructions to trigger the evaluation conditions.
+    *   Choose the appropriate language/extension (e.g., `.py`, `.sh`).
+    *   Save it to `evaluations/scripts/` (create if needed) with a descriptive name (e.g., `evaluate_<subject>_<goal>.<ext>`).
 
-1. **Create a new test script**
+2.  **Execute Script & Capture Output:**
+    *   Run the script from Step 1 using the correct command.
+    *   Capture the *complete raw output* (stdout, stderr, logs, exit codes, side-effects). Note execution errors.
 
-   * Write a new script that includes all the relevant test cases or steps we've discussed.
-   * Choose the appropriate language and file extension (e.g., `.py`, `.js`, `.sh`, `.java`, `.ts`, etc.).
-   * Save it under a suitable subfolder of `tests/` (e.g., `tests/<feature>/test_<feature>.<ext>`).
+3.  **Generate Markdown Report:**
+    *   Create a Markdown report in `evaluations/reports/` (create if needed).
+    *   Use a unique filename (e.g., `<subject>_evaluation_<timestamp>.md`).
 
-2. **Run the test script or steps**
+4.  **Report Content:** Include the following sections:
+    *   **Evaluation Goal:** State my specific instructions for the evaluation.
+    *   **Execution Details:**
+        *   Subject evaluated.
+        *   Script filename used (`evaluations/scripts/...`).
+        *   Command used to run the script.
+    *   **Raw Output:** Include the full captured output within code blocks (```).
+    *   **Detailed Observations:** Analyze the output based on the **Evaluation Goal**. Address:
+        *   How results align with the goal.
+        *   Observed behavior vs. Expected behavior (if applicable).
+        *   Correctness and any deviations found.
+        *   Alignment with relevant **Best Practices**.
+        *   How **Corner Cases** or **Edge Behaviors** were handled (or signs of issues).
+        *   Any **Anomalies** or other noteworthy points.
 
-   * Execute the script using the correct tool or command for its language (e.g., `node`, `python`, `bash`, `java`, etc.).
-   * Capture the full output: logs, pass/fail results, errors, and any visible behavior.
-
-3. **Generate a Markdown test report**
-
-   * Save the report under `tests/results/` with a unique filename:
-
-     ```
-     <feature>_results_<timestamp>.md  
-     (e.g., user_auth_results_20250502T1605.md)
-     ```
-   * In the report, for each test or experiment, clearly include:
-
-     * **Name/description** of the test or action
-     * **Filename** of the test script used
-     * **Command used** to execute it
-     * **Raw output** (full console or log output)
-     * **Observations**:
-
-       * What was expected
-       * What actually happened
-       * Whether the behavior was correct, incorrect, or just noteworthy
-       * Any anomalies, edge-case behavior, or interesting side effects
-
-4. **Write a summary section**
-
-   * At the bottom of the report, add an **Overall Observations** section summarizing:
-
-     * Key results
-     * Notable behavior patterns
-     * Unexpected findings
-     * Suggested follow-up actions or tests
+5.  **Overall Findings:**
+    *   Add a summary section at the end.
+    *   Highlight key findings related to the goal.
+    *   Note significant patterns, strengths, or weaknesses observed.
+    *   Suggest potential next steps, further evaluations, or improvements.
