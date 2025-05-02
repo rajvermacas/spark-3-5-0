@@ -59,6 +59,13 @@
             <artifactId>jackson-module-scala_${scala.compat.version}</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+        
+        <!-- Delta Lake -->
+        <dependency>
+            <groupId>io.delta</groupId>
+            <artifactId>delta-core_${scala.compat.version}</artifactId>
+            <version>2.4.0</version>
+        </dependency>
 
         <!-- Testing -->
         <dependency>

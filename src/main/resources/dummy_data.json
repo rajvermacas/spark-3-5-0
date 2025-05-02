@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "phases": [
+      {
+        "id": 1,
+        "name": "Phase 1",
+        "description": "Description of Phase 1"
+      },
+      {
+        "id": 2,
+        "name": "Phase 2",
+        "description": "Description of Phase 2"
+      }
+    ],
+    "name": "Record 1",
+    "description": "Description of Record 1",
+    "start_date": "2023-01-01"
+  }
+]

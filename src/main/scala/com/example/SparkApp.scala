@@ -4,6 +4,9 @@ import org.apache.spark.sql.{DataFrame, Row, SparkSession}
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
 
+case class Phase(id: Long, name: String, description: String)
+case class DataRecord(id: Long, phases: Seq[Phase], name: String, description: String, start_date: String)
+
 object SparkApp {
   // Define the schema for phases
   private val phaseSchema = StructType(Seq(
@@ -35,25 +38,35 @@ object SparkApp {
     val rawDF = spark.read
       .option("multiline", "true")
       .schema(schema)  // Apply the custom schema
-      .json("src/main/resources/dummy.json")
+      .json("src/main/resources/dummy_data.json")
     
     // Example: If you need to filter before converting to DataRecord
     // val filteredDF = rawDF.filter($"id" <= 2)  // Any filtering operations
-    val filteredDF = rawDF  // Any filtering operations
+    val filteredDF = rawDF.select(
+      "id",
+      "phases",
+      "name",
+      "description",
+      "start_date"
+      )  // Any filtering operations
     
     // Show the first row
     println("First row of the JSON file:")
     // filteredDF.show(1, false)
-    filteredDF.show(false)
+//    filteredDF.show(false)
+
+    val dataRecord: DataRecord = filteredDF.as[DataRecord].first
+    println(s"dataRecord.id: ${dataRecord.id}")
+
 
     // Example of accessing phases with explicit schema
-    println("Extracting phases from first record:")
-    filteredDF.select($"phases").take(1).foreach { row =>
-      val phases = row.getSeq[Row](0)
-      phases.foreach { phase =>
-        println(s"Phase: ${phase.getAs[String]("name")}, Description: ${phase.getAs[String]("description")}")
-      }
-    }
+    // println("Extracting phases from first record:")
+    // filteredDF.select($"phases").take(1).foreach { row =>
+    //   val phases = row.getSeq[Row](0)
+    //   phases.foreach { phase =>
+    //     println(s"Phase: ${phase.getAs[String]("name")}, Description: ${phase.getAs[String]("description")}")
+    //   }
+    // }
 
     // Create a new row using the schema
     val newPhase = Row(3L, "Phase 3", "Description of Phase 3")
@@ -70,13 +83,13 @@ object SparkApp {
       spark.sparkContext.parallelize(Seq(newRow)),
       schema
     )
-    
+
     // Write the new row directly to the JSON file in append mode
-    newRowDF
-      .write
-      .mode("append")
-      .option("multiline", true)
-      .json("src/main/resources/dummy.json")
+    // newRowDF
+    //   .write
+    //   .mode("append")
+    //   .option("multiline", true)
+    //   .json("src/main/resources/dummy.json")
 
     println("New row has been appended to the JSON file")
 
