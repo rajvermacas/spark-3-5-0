@@ -31,7 +31,46 @@
 - Type :quit to exit the spark-shell
 
 # Generate test results
-- Whenever I ask you to create the TEST RESULTS remember to write a new script that will have the discussed test cases
-- Run the test cases and generate the test results and save them to a markdown file in src/test folder.
-- In the newly created markdown file mention very clearly what was the test that was performed and what were the observations along with the program output.
-- Also mention the code snippet that was used to perform the test and mention the test cases filename also which was used.
+
+**When I say “Generate test results,” follow these steps:**
+
+1. **Create a new test script**
+
+   * Write a new script that includes all the relevant test cases or steps we've discussed.
+   * Choose the appropriate language and file extension (e.g., `.py`, `.js`, `.sh`, `.java`, `.ts`, etc.).
+   * Save it under a suitable subfolder of `tests/` (e.g., `tests/<feature>/test_<feature>.<ext>`).
+
+2. **Run the test script or steps**
+
+   * Execute the script using the correct tool or command for its language (e.g., `node`, `python`, `bash`, `java`, etc.).
+   * Capture the full output: logs, pass/fail results, errors, and any visible behavior.
+
+3. **Generate a Markdown test report**
+
+   * Save the report under `tests/results/` with a unique filename:
+
+     ```
+     <feature>_results_<timestamp>.md  
+     (e.g., user_auth_results_20250502T1605.md)
+     ```
+   * In the report, for each test or experiment, clearly include:
+
+     * **Name/description** of the test or action
+     * **Filename** of the test script used
+     * **Command used** to execute it
+     * **Raw output** (full console or log output)
+     * **Observations**:
+
+       * What was expected
+       * What actually happened
+       * Whether the behavior was correct, incorrect, or just noteworthy
+       * Any anomalies, edge-case behavior, or interesting side effects
+
+4. **Write a summary section**
+
+   * At the bottom of the report, add an **Overall Observations** section summarizing:
+
+     * Key results
+     * Notable behavior patterns
+     * Unexpected findings
+     * Suggested follow-up actions or tests
